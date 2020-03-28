@@ -6,5 +6,5 @@ save_non_project_files = False
 
 [main]
 version = 0.2.0
-recent_files = ['20200318 MainScript.py', 'functions/Descriptives.py', 'functions/Plots.py']
+recent_files = ['20200318 MainScript.py']
 

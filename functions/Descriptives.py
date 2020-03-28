@@ -15,7 +15,7 @@ def PairsDescriptiveInfo(pairs, ETFs, UIs, ProfileReport=True):
         print(ETFs[i], "\n", describe(pair["Return_x"]), "\n")
         print(UIs[i], "\n", describe(pair["Return_y"]), "\n")
         
-        if ProfileReport == True:
+        if ProfileReport:
             edaHTML = pp.ProfileReport(pair).to_html()
             name = UIs[i] + "_" + ETFs[i]
             saveDescriptiveHTML(edaHTML, name)

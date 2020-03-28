@@ -9,7 +9,7 @@ from functions.Bloomberg import BloombergTickers, GetDataBloomberg
 from functions.YFinance import YFTickers, GetDataYF
 from functions.DataWork import GetPairs
 from functions.Econometrics import Regress1
-from functions.Descriptives import DescriptivePlots, PairsDescriptiveInfo   
+from functions.Descriptives import PairsDescriptiveInfo
 import functions.Plots as plots
 
 
@@ -21,7 +21,7 @@ importData = 0
 
 
 ####     IMPORT USING BLOOMBERG EXPORT
-if importData == 1:
+if importData:
     ETFs, UIs, MSCI = BloombergTickers()
     data_etf, data_ui, data_world = GetDataBloomberg("/Users/alenrozac/Desktop/Code/20200310 Bloomberg OHLCV.xlsx")
     pairs = GetPairs(data_etf, data_ui)
@@ -29,7 +29,7 @@ if importData == 1:
 
 
 
-import functions.Plots as plots
+
 # PairsDescriptiveInfo(pairs, ETFs, UIs, ProfileReport=True)
 plots.Price(pairs, ETFs, UIs)
 plots.PriceIndex(pairs, ETFs, UIs, paired=True)
