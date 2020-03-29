@@ -14,6 +14,7 @@ import functions.Plots as plots
 
 
 importData = 0
+ecm = 1
 
 ####    IMPORT USING YF
 # ETFs, UIs, MSCI = YFinance.YFTickers()
@@ -41,7 +42,8 @@ if importData:
 
 
 # Econometrics
-reg1, resids1 = econometrics.Regress1(pairs, ETFs, UIs, plot=False)
+if ecm:
+    reg1, resids1, Tab1 = econometrics.Regress1(pairs, ETFs, UIs, plot=False)
 
 
 
@@ -52,12 +54,16 @@ reg1, resids1 = econometrics.Regress1(pairs, ETFs, UIs, plot=False)
 
 
 
+#######    Cointegration
+
+# from statsmodels.tsa.vector_ar.vecm import coint_johansen
+# x = pairs[1][["Return_x", "Return_y"]] # dataframe of n series for cointegration analysis
+# jres = coint_johansen(x, det_order=0, k_ar_diff=1)
 
 
-    
-from statsmodels.tsa.vector_ar.vecm import coint_johansen
-x = pairs[1][["Return_x", "Return_y"]] # dataframe of n series for cointegration analysis
-jres = coint_johansen(x, det_order=0, k_ar_diff=1)
+
+
+
 
 
 
@@ -78,8 +84,23 @@ jres = coint_johansen(x, det_order=0, k_ar_diff=1)
 # print(np.argmin([len(pair) for pair in pairs]))
 # mindate = pairs[3].index[-1]
 
-for pair in pairs:
-    print(pair.index[0])
+# for pair in pairs:
+#     print(pair.index[0])
 
 # maxdate = 
 
+
+
+
+# =============================================================================
+#  DONE
+
+####### Tabulation
+# from stargazer.stargazer import Stargazer
+
+# tab1 = Stargazer([reg for reg in reg1])
+# tab1.custom_columns(ETFs, [1]*10)
+# tab1.show_model_numbers(False)
+
+
+# tabb1 = tab1.render_html()
