@@ -8,8 +8,8 @@ sns.set_style("whitegrid")
 from functions.Bloomberg import BloombergTickers, GetDataBloomberg
 from functions.YFinance import YFTickers, GetDataYF
 from functions.DataWork import GetPairs
-from functions.Econometrics import Regress1
 from functions.Descriptives import PairsDescriptiveInfo
+import functions.Econometrics as econometrics
 import functions.Plots as plots
 
 
@@ -29,18 +29,19 @@ if importData:
 
 
 
-
+## PLOTS
 # PairsDescriptiveInfo(pairs, ETFs, UIs, ProfileReport=True)
-plots.Price(pairs, ETFs, UIs)
-plots.PriceIndex(pairs, ETFs, UIs, paired=True)
-plots.Returns(pairs, ETFs, UIs)
-plots.ReturnsDist(pairs, ETFs, UIs, hist=False, xlim=(-0.05, 0.05))
-plots.DiffGap(pairs, ETFs, UIs)
-plots.Joint(pairs, ETFs, UIs)
+# plots.Price(pairs, ETFs, UIs)
+# plots.PriceIndex(pairs, ETFs, UIs, paired=True)
+# plots.Returns(pairs, ETFs, UIs)
+# plots.ReturnsDist(pairs, ETFs, UIs, hist=False, xlim=(-0.05, 0.05), ylim=(0, 80))
+# plots.DiffGap(pairs, ETFs, UIs)
+# plots.Joint(pairs, ETFs, UIs)
+
 
 
 # Econometrics
-reg1, resids1 = Regress1(pairs, ETFs, UIs, plot=False)
+reg1, resids1 = econometrics.Regress1(pairs, ETFs, UIs, plot=False)
 
 
 

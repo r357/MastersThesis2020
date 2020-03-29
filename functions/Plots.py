@@ -11,24 +11,28 @@ s = os.getcwd()+"/Graphs/"
 def Price(pairs, ETFs, UIs, paired=False):
     for i, pair in enumerate(pairs):
         
-        plt.figure()
-        plt.plot(pair["Close_x"], label=ETFs[i])
-        plt.legend()
-        
-        if not paired: 
+        if paired:
+            plt.figure()
+            plt.plot(pair["Close_x"], label=ETFs[i])
+            plt.legend()
             plt.savefig(s+"1_"+str(i)+"_PricePlot_"+ETFs[i])
             plt.show();
             plt.figure()
-        
-        plt.plot(pair["Close_y"], label=UIs[i])
-        plt.legend()
-        if not paired:
+            plt.plot(pair["Close_y"], label=UIs[i])
+            plt.legend()
             plt.savefig(s+"1_"+str(i)+"_PricePlot_"+UIs[i])
-        else:
-            plt.savefig(s+"11_"+str(i)+"_PricePlot_"+ETFs[i]+"_"+UIs[i])            
-        plt.show();
+            plt.show();
         
-
+        else: 
+            fig, axs = plt.subplots(1,2, figsize=(8,4))
+            axs[0].plot(pair["Close_x"], label=ETFs[i])
+            axs[1].plot(pair["Close_y"], label=UIs[i], color="C1")
+            fig.legend([ETFs[i], UIs[i]])
+            plt.savefig(s+"1_"+str(i)+"_Price_"+ETFs[i]+"_"+UIs[i])
+            fig.show();
+        
+        
+        
 
 
 # Plot indexed prices
@@ -76,7 +80,8 @@ def Returns(pairs, ETFs, UIs, paired=False):
 
 
 # Plot returns histogram, kernel density
-def ReturnsDist(pairs, ETFs, UIs, density=True, normed=True, bins=15, paired=True, hist=True, xlim=False):
+def ReturnsDist(pairs, ETFs, UIs, density=True, normed=True, bins=15, 
+                paired=True, hist=True, xlim=False, ylim=False):
     for i, pair in enumerate(pairs):
        
         plt.figure()
@@ -86,12 +91,14 @@ def ReturnsDist(pairs, ETFs, UIs, density=True, normed=True, bins=15, paired=Tru
         plt.ylabel("Density")
         
         if xlim: plt.xlim(xlim)
+        if ylim: plt.ylim(ylim)
         
         if not paired: 
             plt.show();
             plt.figure()
             plt.ylabel("Density")
             if xlim: plt.xlim(xlim)
+            if ylim: plt.ylim(ylim)
             
         sns.distplot(pair["Return_y"], label=UIs[i],
                      hist=hist, kde=density, norm_hist=normed, bins=bins)
