@@ -43,7 +43,7 @@ if importData:
 
 # Econometrics
 if ecm:
-    reg1, resids1, Tab1 = econometrics.Regress1(pairs, ETFs, UIs, plot=False)
+    reg1, resids1, Tab1 = econometrics.Regress1(pairs, ETFs, UIs, plot=False, HTMLsave=True)
 
 
 
