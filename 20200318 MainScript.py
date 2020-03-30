@@ -7,13 +7,14 @@ sns.set_style("whitegrid")
 # Custom functions
 from functions.Bloomberg import BloombergTickers, GetDataBloomberg
 from functions.YFinance import YFTickers, GetDataYF
-from functions.DataWork import GetPairs
+from functions.DataWork import GetPairs, DateCUT
 from functions.Descriptives import PairsDescriptiveInfo
 import functions.Econometrics as econometrics
 import functions.Plots as plots
 
 
 importData = 0
+CUTdate = 1
 ecm = 1
 
 ####    IMPORT USING YF
@@ -25,7 +26,10 @@ ecm = 1
 if importData:
     ETFs, UIs, MSCI = BloombergTickers()
     data_etf, data_ui, data_world = GetDataBloomberg("/Users/alenrozac/Desktop/Code/20200310 Bloomberg OHLCV.xlsx")
-    pairs = GetPairs(data_etf, data_ui)
+    FullData = GetPairs(data_etf, data_ui)
+    
+if CUTdate:
+    pairs = DateCUT(FullData, Dmin="2010-01-01", Dmax = None)
 
 
 
@@ -49,9 +53,9 @@ if ecm:
 
 
 
+
 # =============================================================================
 #  TESTING / BUILDING
-
 
 
 #######    Cointegration
@@ -74,33 +78,4 @@ if ecm:
 
 
 
-# =============================================================================
-#  DUMP
 
-# from functools import reduce
-# df_merged = reduce(lambda left,right: pd.merge(left,right, how='inner', left_index=True, right_index=True), pairs)
-
-
-# print(np.argmin([len(pair) for pair in pairs]))
-# mindate = pairs[3].index[-1]
-
-# for pair in pairs:
-#     print(pair.index[0])
-
-# maxdate = 
-
-
-
-
-# =============================================================================
-#  DONE
-
-####### Tabulation
-# from stargazer.stargazer import Stargazer
-
-# tab1 = Stargazer([reg for reg in reg1])
-# tab1.custom_columns(ETFs, [1]*10)
-# tab1.show_model_numbers(False)
-
-
-# tabb1 = tab1.render_html()

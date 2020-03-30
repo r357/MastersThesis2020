@@ -22,6 +22,17 @@ def PairUp1(ETF, UI):
 
 def GetPairs(data_etf, data_ui):
     if len(data_etf) == len(data_ui):
-        Pairs = [PairUp1(data_etf[i], data_ui[i]) for i, _ in enumerate(data_etf)]
-    return(Pairs)
+        pairs = [PairUp1(data_etf[i], data_ui[i]) for i, _ in enumerate(data_etf)]
+    return(pairs)
  
+    
+
+
+def DateCUT(pairs, Dmin=None, Dmax=None):
+    new = []
+    for i, pair in enumerate(pairs):
+        new.append(pair.loc[Dmin:Dmax])
+    return new
+
+
+
