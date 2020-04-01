@@ -10,7 +10,7 @@ def PairUp1(ETF, UI):
     
     # Discard anomalies
     pair = pair[(pair["Return_x"] < 0.5) & (pair["Return_x"] > -0.5)]
-    pair["Diff"] = pair["LnClose_y"] - pair["LnClose_x"]
+    pair["DIFF"] = pair["Close_y"] - pair["Close_x"]
     pair["absGAP"] = np.abs(pair["Return_y"] - pair["Return_x"])
     
     # Indices

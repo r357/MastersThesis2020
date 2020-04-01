@@ -10,7 +10,7 @@ def GetData(ticker, start="2000-01-01", end = "2019-09-01"):
     # Calculate Sigma, Returns, Indices - Adjusted data
     df["Sigma"] = np.log( df["High"] / df["Low"] )
     df["Return"] = df["Close"].pct_change()
-    df["LnClose"] = np.log(df["Close"])
+    # df["LnClose"] = np.log(df["Close"])
     return(df)
 
 

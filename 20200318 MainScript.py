@@ -14,7 +14,8 @@ import functions.Plots as plots
 
 
 importData = 0
-CUTdate = 1
+CUTdate = 0
+Plot = 0
 ecm = 1
 
 ####    IMPORT USING YF
@@ -28,20 +29,17 @@ if importData:
     data_etf, data_ui, data_world = GetDataBloomberg("/Users/alenrozac/Desktop/Code/20200310 Bloomberg OHLCV.xlsx")
     FullData = GetPairs(data_etf, data_ui)
     
-if CUTdate:
-    pairs = DateCUT(FullData, Dmin="2010-01-01", Dmax = None)
+if CUTdate: pairs = DateCUT(FullData, Dmin="2010-01-01", Dmax = None)
+else: pairs = FullData
 
-
-
-
-## PLOTS
-# PairsDescriptiveInfo(pairs, ETFs, UIs, ProfileReport=True)
-# plots.Price(pairs, ETFs, UIs)
-# plots.PriceIndex(pairs, ETFs, UIs, paired=True)
-# plots.Returns(pairs, ETFs, UIs)
-# plots.ReturnsDist(pairs, ETFs, UIs, hist=False, xlim=(-0.05, 0.05), ylim=(0, 80))
-# plots.DiffGap(pairs, ETFs, UIs)
-# plots.Joint(pairs, ETFs, UIs)
+if Plot:
+    # PairsDescriptiveInfo(pairs, ETFs, UIs, ProfileReport=True)
+    plots.Price(pairs, ETFs, UIs)
+    plots.PriceIndex(pairs, ETFs, UIs, paired=True)
+    plots.Returns(pairs, ETFs, UIs)
+    plots.ReturnsDist(pairs, ETFs, UIs, hist=False, xlim=(-0.05, 0.05), ylim=(0, 80))
+    plots.DiffGap(pairs, ETFs, UIs)
+    plots.Joint(pairs, ETFs, UIs)
 
 
 
@@ -60,12 +58,13 @@ if ecm:
 
 #######    Cointegration
 
-# from statsmodels.tsa.vector_ar.vecm import coint_johansen
-# x = pairs[1][["Return_x", "Return_y"]] # dataframe of n series for cointegration analysis
-# jres = coint_johansen(x, det_order=0, k_ar_diff=1)
+from statsmodels.tsa.vector_ar.vecm import coint_johansen
+
+x = pairs[1][["Return_x", "Return_y"]] # dataframe of n series for cointegration analysis
+jres = coint_johansen(x, det_order=0, k_ar_diff=1)
 
 
-
+print()
 
 
 
