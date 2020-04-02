@@ -29,10 +29,11 @@ if importData:
     data_etf, data_ui, data_world = GetDataBloomberg("/Users/alenrozac/Desktop/Code/20200310 Bloomberg OHLCV.xlsx")
     FullData = GetPairs(data_etf, data_ui)
     
-if CUTdate: pairs = DateCUT(FullData, Dmin="2010-01-01", Dmax = None)
+if CUTdate: pairs = DateCUT(FullData, Dmin="2008-01-01", Dmax="2010-01-01")
 else: pairs = FullData
 
 if Plot:
+    # N.B. Plotted returns are not log returns
     # PairsDescriptiveInfo(pairs, ETFs, UIs, ProfileReport=True)
     plots.Price(pairs, ETFs, UIs)
     plots.PriceIndex(pairs, ETFs, UIs, paired=True)
@@ -40,6 +41,7 @@ if Plot:
     plots.ReturnsDist(pairs, ETFs, UIs, hist=False, xlim=(-0.05, 0.05), ylim=(0, 80))
     plots.DiffGap(pairs, ETFs, UIs)
     plots.Joint(pairs, ETFs, UIs)
+
 
 
 
@@ -57,17 +59,20 @@ if ecm:
 
 
 #######    Cointegration
-
-from statsmodels.tsa.vector_ar.vecm import coint_johansen
-
-x = pairs[1][["Return_x", "Return_y"]] # dataframe of n series for cointegration analysis
-jres = coint_johansen(x, det_order=0, k_ar_diff=1)
+# https://towardsdatascience.com/vector-autoregressions-vector-error-correction-multivariate-model-a69daf6ab618"
 
 
-print()
+from statsmodels.tsa.stattools import coint
 
+for i, pair in enumerate(pairs):
+    y0 = np.log(pair["Close_x"])
+    y1 = np.log(pair["Close_y"])
+    score, pval, _ = coint(y0, y1, trend="ct")
+    print(i, "\t", round(pval,3), "\t",  ETFs[i])
+    
 
-
+for p in pairs:
+    print(p["lnReturn_x"].describe())
 
 
 

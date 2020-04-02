@@ -116,10 +116,10 @@ def DiffGap(pairs, ETFs, UIs, paired=False):
         if not paired:
             fig, axs = plt.subplots(1, 2, tight_layout=True, figsize=(8,4))
             axs[0].plot(pair["DIFF"])
-            # axs[0].set_title("Difference in ln(prices): " + ETFs[i] + " and " + UIs[i])
+            # axs[0].set_title("Difference in log prices: " + ETFs[i] + " and " + UIs[i])
             axs[0].set_title("DIFF")
             axs[1].plot(pair["absGAP"])
-            # axs[1].set_title("Absolute GAP in returns: "+ ETFs[i] + " and " + UIs[i])
+            # axs[1].set_title("Absolute GAP in log returns: "+ ETFs[i] + " and " + UIs[i])
             axs[1].set_title("|GAP|")
             plt.savefig(s+"5_"+str(i)+"_DiffGap_"+ETFs[i]+"_"+UIs[i])
             plt.show();

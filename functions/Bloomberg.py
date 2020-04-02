@@ -13,8 +13,9 @@ def PrepareBloombergData(tickers, xls_filepath):
         df = df.dropna()
         df.set_index("Dates", inplace=True)
         df["Sigma"] = np.log( df["High"] / df["Low"] )
+        df["lnClose"] = np.log(df["Close"])
+        df["lnReturn"] = df["lnClose"].pct_change()
         df["Return"] = df["Close"].pct_change()
-        #df["LnClose"] = np.log(df["Close"])
         data.append(df)
     return(data)
 
