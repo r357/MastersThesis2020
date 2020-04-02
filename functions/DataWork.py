@@ -11,7 +11,7 @@ def PairUp1(ETF, UI):
     # Discard anomalies
     pair = pair[(pair["Return_x"] < 0.5) & (pair["Return_x"] > -0.5)]
     pair["DIFF"] = pair["lnClose_y"] - pair["lnClose_x"]
-    pair["absGAP"] = np.abs(pair["lnReturn_y"] - pair["lnReturn_x"])
+    pair["GAP"] = np.abs(pair["lnReturn_y"] - pair["lnReturn_x"])
     
     # Indices
     pair["Close_x_INDEX"] = pair["Close_x"]/pair["Close_x"][0]
@@ -32,6 +32,8 @@ def DateCUT(pairs, Dmin=None, Dmax=None):
     new = []
     for i, pair in enumerate(pairs):
         new.append(pair.loc[Dmin:Dmax])
+        pair["Close_x_INDEX"] = pair["Close_x"]/pair["Close_x"][0]
+        pair["Close_y_INDEX"] = pair["Close_y"]/pair["Close_y"][0]
     return new
 
 

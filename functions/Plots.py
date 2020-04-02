@@ -135,7 +135,7 @@ def Joint(pairs, ETFs, UIs):
         joint.set_axis_labels(ETFs[i], UIs[i])
         plt.tight_layout()
         plt.savefig(s+"6_"+str(i)+"_JointPlot_"+ETFs[i]+"_"+UIs[i])
-        plt.show
+        plt.show();
 
 
 

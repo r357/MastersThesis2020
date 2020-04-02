@@ -14,7 +14,7 @@ import functions.Plots as plots
 
 
 importData = 0
-CUTdate = 0
+CUTdate = 1
 Plot = 0
 ecm = 1
 
@@ -29,7 +29,7 @@ if importData:
     data_etf, data_ui, data_world = GetDataBloomberg("/Users/alenrozac/Desktop/Code/20200310 Bloomberg OHLCV.xlsx")
     FullData = GetPairs(data_etf, data_ui)
     
-if CUTdate: pairs = DateCUT(FullData, Dmin="2008-01-01", Dmax="2010-01-01")
+if CUTdate: pairs = DateCUT(FullData, Dmin="2010-01-01", Dmax=None)
 else: pairs = FullData
 
 if Plot:
@@ -44,13 +44,11 @@ if Plot:
 
 
 
-
 # Econometrics
 if ecm:
     reg1, resids1, Tab1 = econometrics.Regress1(pairs, ETFs, UIs, plot=False, HTMLsave=True)
-
-
-
+    adf_c = econometrics.StationarityADF(pairs, ETFs, UIs, "c")
+    adf_ct = econometrics.StationarityADF(pairs, ETFs, UIs, "ct") 
 
 
 
@@ -70,6 +68,20 @@ for i, pair in enumerate(pairs):
     score, pval, _ = coint(y0, y1, trend="ct")
     print(i, "\t", round(pval,3), "\t",  ETFs[i])
     
+
+a = pairs[2]["DIFF"]
+b = np.log(pairs[2]["Close_y"])-np.log(pairs[2]["Close_x"])
+plt.plot(b)
+
+
+
+
+
+
+
+
+
+######     DESCRIPTIVES
 
 for p in pairs:
     print(p["lnReturn_x"].describe())
