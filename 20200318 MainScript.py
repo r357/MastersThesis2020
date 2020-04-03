@@ -8,13 +8,14 @@ sns.set_style("whitegrid")
 from functions.Bloomberg import BloombergTickers, GetDataBloomberg
 from functions.YFinance import YFTickers, GetDataYF
 from functions.DataWork import GetPairs, DateCUT
-from functions.Descriptives import PairsDescriptiveInfo
+import functions.Descriptives as descriptives
 import functions.Econometrics as econometrics
 import functions.Plots as plots
 
 
 importData = 0
 CUTdate = 1
+Descr = 1
 Plot = 0
 ecm = 1
 
@@ -29,12 +30,23 @@ if importData:
     data_etf, data_ui, data_world = GetDataBloomberg("/Users/alenrozac/Desktop/Code/20200310 Bloomberg OHLCV.xlsx")
     FullData = GetPairs(data_etf, data_ui)
     
+    
+    
 if CUTdate: pairs = DateCUT(FullData, Dmin="2010-01-01", Dmax=None)
 else: pairs = FullData
 
+
+
+if Descr:
+    # descriptives.PairsDescriptiveInfo(pairs, ETFs, UIs, ProfileReport=True)
+    # descriptives.GenerateDescHTMLs(pairs, ETFs, UIs)
+    descriptives.DescribeColumns(pairs, "Return_x", ETFs)
+    descriptives.DescribeColumns(pairs, "Return_y", UIs)
+
+
+
 if Plot:
     # N.B. Plotted returns are not log returns
-    # PairsDescriptiveInfo(pairs, ETFs, UIs, ProfileReport=True)
     plots.Price(pairs, ETFs, UIs)
     plots.PriceIndex(pairs, ETFs, UIs, paired=True)
     plots.Returns(pairs, ETFs, UIs)
@@ -73,18 +85,6 @@ a = pairs[2]["DIFF"]
 b = np.log(pairs[2]["Close_y"])-np.log(pairs[2]["Close_x"])
 plt.plot(b)
 
-
-
-
-
-
-
-
-
-######     DESCRIPTIVES
-
-for p in pairs:
-    print(p["lnReturn_x"].describe())
 
 
 

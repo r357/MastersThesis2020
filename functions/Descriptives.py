@@ -3,6 +3,9 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+from scipy import stats
+import os   
+
 sns.set_style("whitegrid")
 
         
@@ -25,16 +28,18 @@ def PairsDescriptiveInfo(pairs, ETFs, UIs, ProfileReport=True):
 
 
 
-
-def saveHTML(HTML, filename):
+def saveHTML(HTML, filename, folder=None):
     '''
     profile reports to HTML into a folder:
-        ./HTMLs/
+        ./Descriptives/
 
     '''
-
-    import os    
-    s = os.getcwd()+"/HTMLs/"
+ 
+    if not folder: 
+        s = os.getcwd()+"/Descriptives/" 
+    else:
+        s = os.getcwd()+"/"+folder+"/"
+        
     _filename = s + filename + ".html"
     
     with open(_filename, 'w') as file:
@@ -43,3 +48,46 @@ def saveHTML(HTML, filename):
 
 
 
+def GenerateDescriptiveDF(pairs, column, names):
+    df = pd.DataFrame()
+    for i, pair in enumerate(pairs):
+        df[str(names[i])] = pair[column]
+    return df
+
+
+
+
+### !!! FIX NAMES
+def GenerateDescHTMLs(pairs, names):
+    import pandas_profiling as pp
+    returnsETF = GenerateDescriptiveDF(pairs, "Return_x", ETFs, UIs)    
+    returnsUI = GenerateDescriptiveDF(pairs, "Return_y", ETFs, UIs)
+    returnsETF_HTML = pp.ProfileReport(returnsETF, minimal=True).to_html()
+    returnsUI_HTML = pp.ProfileReport(returnsUI, minimal=True).to_html()
+    saveHTML(returnsETF_HTML, "returnsETF")
+    saveHTML(returnsUI_HTML, "returnsUI")
+
+
+
+
+
+def DescribeColumns(pairs, column, names):
+    s = os.getcwd()+"/Descriptives/"
+    columnDF = GenerateDescriptiveDF(pairs, column, names)
+    stats_column = pd.DataFrame()
+    
+    for c in columnDF.columns:
+        stats_column[str(c)] = stats.describe(columnDF[c].dropna().round(5))
+        
+    a = stats_column.transpose()
+    a.columns=["N", "Min_Max", "Mean", "Variance", "Skewness", "Kurtosis"]
+    a = a.drop("Min_Max", 1)
+    a.to_excel(s + column + ".xls")
+    
+    
+    
+    
+    
+    
+    
+    
