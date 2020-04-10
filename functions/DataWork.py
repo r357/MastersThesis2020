@@ -16,7 +16,22 @@ def PairUp1(ETF, UI):
     # Indices
     pair["Close_x_INDEX"] = pair["Close_x"]/pair["Close_x"][0]
     pair["Close_y_INDEX"] = pair["Close_y"]/pair["Close_y"][0]
-    return(pair)
+    return pair
+
+
+
+def PairUp2(pairs, data_world):
+    pairs2, dw = [], pd.DataFrame()
+    dw["lnReturn_world"] = data_world[0]["lnReturn"]
+    
+    for i, pair in enumerate(pairs):
+    
+        pair2 = pd.merge(pair, dw, how="inner", left_index=True, right_index=True)
+        pairs2.append(pair2)
+    
+    return pairs2
+
+
 
 
 
@@ -28,13 +43,15 @@ def GetPairs(data_etf, data_ui):
     
 
 
+
 def DateCUT(pairs, Dmin=None, Dmax=None):
     new = []
     for i, pair in enumerate(pairs):
         new.append(pair.loc[Dmin:Dmax])
         pair["Close_x_INDEX"] = pair["Close_x"]/pair["Close_x"][0]
-        pair["Close_y_INDEX"] = pair["Close_y"]/pair["Close_y"][0]
+        # pair["Close_y_INDEX"] = pair["Close_y"]/pair["Close_y"][0]
     return new
+
 
 
 

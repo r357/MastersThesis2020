@@ -50,3 +50,10 @@ plt.plot(counts)
 #     print(pair.index[0])
 
 # maxdate = 
+
+
+
+######   DETRENDING: Volume is already de-trended
+t = pairs[0]["lnClose_x"].diff(1)
+plt.plot(t)
+print(pairs[0].columns)

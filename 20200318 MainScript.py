@@ -3,11 +3,9 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 sns.set_style("whitegrid")
-
-# Custom functions
 from functions.Bloomberg import BloombergTickers, GetDataBloomberg
 from functions.YFinance import YFTickers, GetDataYF
-from functions.DataWork import GetPairs, DateCUT
+from functions.DataWork import GetPairs, DateCUT, PairUp2
 import functions.Descriptives as descriptives
 import functions.Econometrics as econometrics
 import functions.Plots as plots
@@ -19,22 +17,20 @@ Descr = 0
 Plot = 0
 ecm = 0
 
-####    IMPORT USING YF
+
+##  IMPORT USING YF
 # ETFs, UIs, MSCI = YFinance.YFTickers()
 # data_etf, data_ui, data_world = YFinance.GetDataYF()
 
-
-####     IMPORT USING BLOOMBERG EXPORT
+##  IMPORT USING BLOOMBERG EXPORT XLS
 if importData:
     ETFs, UIs, MSCI = BloombergTickers()
     data_etf, data_ui, data_world = GetDataBloomberg("/Users/alenrozac/Desktop/Code/20200310 Bloomberg OHLCV.xlsx")
     FullData = GetPairs(data_etf, data_ui)
     
     
-    
-if CUTdate: pairs = DateCUT(FullData, Dmin="2010-01-01", Dmax=None)
+if CUTdate: pairs = DateCUT(FullData, Dmin="2020-01-01", Dmax=None)
 else: pairs = FullData
-
 
 
 if Descr:
@@ -42,7 +38,6 @@ if Descr:
     # descriptives.GenerateDescHTMLs(pairs, ETFs, UIs)
     descriptives.DescribeColumns(pairs, "Return_x", ETFs)
     descriptives.DescribeColumns(pairs, "Return_y", UIs)
-
 
 
 if Plot:
@@ -55,12 +50,15 @@ if Plot:
     plots.Joint(pairs, ETFs, UIs)
 
 
-
 # Econometrics
 if ecm:
     reg1, resids1, Tab1 = econometrics.Regress1(pairs, ETFs, UIs, plot=False, HTMLsave=True)
     adf_c = econometrics.StationarityADF(pairs, ETFs, UIs, "c")
     adf_ct = econometrics.StationarityADF(pairs, ETFs, UIs, "ct") 
+
+
+
+
 
 
 
@@ -72,34 +70,69 @@ if ecm:
 # https://towardsdatascience.com/vector-autoregressions-vector-error-correction-multivariate-model-a69daf6ab618"
 
 
-from statsmodels.tsa.stattools import coint
+# from statsmodels.tsa.stattools import coint
 
-for i, pair in enumerate(pairs):
-    y0 = np.log(pair["Close_x"])
-    y1 = np.log(pair["Close_y"])
-    score, pval, _ = coint(y0, y1, trend="ct")
-    print(i, "\t", round(pval,3), "\t",  ETFs[i])
+# for i, pair in enumerate(pairs):
+#     y0 = np.log(pair["Close_x"])
+#     y1 = np.log(pair["Close_y"])
+#     score, pval, _ = coint(y0, y1, trend="ct")
+#     print(i, "\t", round(pval,3), "\t",  ETFs[i])
     
 
-a = pairs[2]["DIFF"]
-b = np.log(pairs[2]["Close_y"])-np.log(pairs[2]["Close_x"])
-plt.plot(b)
+# a = pairs[2]["DIFF"]
+# b = np.log(pairs[2]["Close_y"])-np.log(pairs[2]["Close_x"])
+# plt.plot(b)
+
+
+
+####   MODEL 2  -  PairUp2
+
+pairs2 = PairUp2(pairs, data_world)
+
+reg2, Tab2 = econometrics.Regress2(pairs2, ETFs, UIs, data_world)
+
+
 
 
 
 
 # =============================================================================
-#   TO-DO LIST
+'''   TO-DO LIST
 
-# 1. Detrend volume
-# 2. Writ out hypotheses
-# 3. define steps for each h
-# 4. Code Model 2
-# 5. Code cointegration again.
-    # Model 1 - Error Correction Model.
-    # Cointegration test
-
-
+4. Code Model 2
+    - pair the world data to the dataset.
+    
+    
+5. Code cointegration again.
+    - Model 1 - Error Correction Model.
+    - Cointegration test
 
 
+'''
+# =============================================================================
+'''   COMMENTS
+
+1. The plots are not log diffs, but only 1-period diffs
+2. Volume is already de-trended as-is (Qadan & Yagil, p.9)
+3. GAP is already absolute.
+4. Using smf over sm makes it easier for work with constants in regression
+
+
+'''
+# =============================================================================
+'''   HYPOTHESES
+
+H1: Presence of long run equilibirum (on an efficient market)
+    - Stationarity
+    - Cointegration
+    - ECM performs well (reg1)
+    
+H2: TE are +corr w Volatility, -corr w Volume
+    - coeffs (reg2)
+
+H3: World index can explain TE
+    - coeffs (reg2)
+    
+
+'''
 
