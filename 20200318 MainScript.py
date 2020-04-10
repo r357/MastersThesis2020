@@ -14,10 +14,10 @@ import functions.Plots as plots
 
 
 importData = 0
-CUTdate = 1
-Descr = 1
+CUTdate = 0
+Descr = 0
 Plot = 0
-ecm = 1
+ecm = 0
 
 ####    IMPORT USING YF
 # ETFs, UIs, MSCI = YFinance.YFTickers()
@@ -88,8 +88,16 @@ plt.plot(b)
 
 
 
+# =============================================================================
+#   TO-DO LIST
 
-
+# 1. Detrend volume
+# 2. Writ out hypotheses
+# 3. define steps for each h
+# 4. Code Model 2
+# 5. Code cointegration again.
+    # Model 1 - Error Correction Model.
+    # Cointegration test
 
 
 
