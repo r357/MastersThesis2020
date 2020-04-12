@@ -7,17 +7,26 @@ import numpy as np
 def PrepareBloombergData(tickers, xls_filepath):
     data = []
     xl = pd.ExcelFile(xls_filepath)
+    
     for i, sheetname in enumerate(tickers):
         df = pd.DataFrame()
         df = xl.parse(sheetname)
-        df = df.dropna()
         df.set_index("Dates", inplace=True)
+        
+        df["Return"] = df["Close"].pct_change()
+                
+        # Natural logs
         df["Sigma"] = np.log( df["High"] / df["Low"] )
         df["lnClose"] = np.log(df["Close"])
         df["lnReturn"] = df["lnClose"].pct_change()
-        df["Return"] = df["Close"].pct_change()
+        df["lnVolume"] = np.log(df["Volume"])
+
+        # Drop NAs and append      
+        df = df.dropna()
         data.append(df)
+    
     return(data)
+
 
 
 

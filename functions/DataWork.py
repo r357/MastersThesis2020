@@ -16,12 +16,15 @@ def PairUp1(ETF, UI):
     # Indices
     pair["Close_x_INDEX"] = pair["Close_x"]/pair["Close_x"][0]
     pair["Close_y_INDEX"] = pair["Close_y"]/pair["Close_y"][0]
+    
     return pair
 
 
 
-def PairUp2(pairs, data_world):
-    pairs2, dw = [], pd.DataFrame()
+def PairUp2(pairs, data_world, detrend=True):
+    pairs2 = []
+    dw = pd.DataFrame()
+    
     dw["lnReturn_world"] = data_world[0]["lnReturn"]
     
     for i, pair in enumerate(pairs):

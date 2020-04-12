@@ -12,10 +12,10 @@ import functions.Plots as plots
 
 
 importData = 0
-CUTdate = 0
+CUTdate = 1
 Descr = 0
 Plot = 0
-ecm = 0
+ecm = 1
 
 
 ##  IMPORT USING YF
@@ -28,8 +28,9 @@ if importData:
     data_etf, data_ui, data_world = GetDataBloomberg("/Users/alenrozac/Desktop/Code/20200310 Bloomberg OHLCV.xlsx")
     FullData = GetPairs(data_etf, data_ui)
     
-    
-if CUTdate: pairs = DateCUT(FullData, Dmin="2020-01-01", Dmax=None)
+
+# Good window: 2018-01-01 >    
+if CUTdate: pairs = DateCUT(FullData, Dmin="2018-01-01", Dmax=None)
 else: pairs = FullData
 
 
@@ -41,7 +42,7 @@ if Descr:
 
 
 if Plot:
-    # N.B. Plotted returns are not log returns
+    # N.B. Plotted returns are NOT log returns
     plots.Price(pairs, ETFs, UIs)
     plots.PriceIndex(pairs, ETFs, UIs, paired=True)
     plots.Returns(pairs, ETFs, UIs)
@@ -52,10 +53,19 @@ if Plot:
 
 # Econometrics
 if ecm:
-    reg1, resids1, Tab1 = econometrics.Regress1(pairs, ETFs, UIs, plot=False, HTMLsave=True)
+    # Stationarity tests on input data
     adf_c = econometrics.StationarityADF(pairs, ETFs, UIs, "c")
     adf_ct = econometrics.StationarityADF(pairs, ETFs, UIs, "ct") 
+    
+    #Regression 1
+    reg1, resids1, Tab1 = econometrics.Regress1(pairs, ETFs, UIs, plot=False, HTMLsave=True)
 
+    # !!! Stationarity test on (write)
+    
+
+    # Regression 2
+    pairs2 = PairUp2(pairs, data_world)
+    reg2, Tab2 = econometrics.Regress2(pairs2, ETFs, UIs, data_world)
 
 
 
@@ -83,13 +93,14 @@ if ecm:
 # b = np.log(pairs[2]["Close_y"])-np.log(pairs[2]["Close_x"])
 # plt.plot(b)
 
+from statsmodels.tsa.stattools import adfuller   
+plt.plot(resids1[1])
+for r in resids1:
+    print(round(adfuller(r)[1],3))
 
+print(adfuller(pairs[0]["lnClose_x"])[1])
+print(adfuller(pairs[0]["lnClose_y"])[1])
 
-####   MODEL 2  -  PairUp2
-
-pairs2 = PairUp2(pairs, data_world)
-
-reg2, Tab2 = econometrics.Regress2(pairs2, ETFs, UIs, data_world)
 
 
 
@@ -99,23 +110,28 @@ reg2, Tab2 = econometrics.Regress2(pairs2, ETFs, UIs, data_world)
 # =============================================================================
 '''   TO-DO LIST
 
-4. Code Model 2
-    - pair the world data to the dataset.
+1. add KPSS to testing?
     
-    
-5. Code cointegration again.
-    - Model 1 - Error Correction Model.
+2. Code cointegration again.
     - Cointegration test
-
+    1. show I(1) {not stationary} lnClose_x and lnClose_y
+    2. Perform ECM reg1
+    3. ADF on resids of reg1
+        if I(0): cointegrated series.
 
 '''
 # =============================================================================
 '''   COMMENTS
 
 1. The plots are not log diffs, but only 1-period diffs
-2. Volume is already de-trended as-is (Qadan & Yagil, p.9)
+2. Volume is already de-trended as-is (Qadan & Yagil, p.9), used lnUI. - look at notes.
 3. GAP is already absolute.
-4. Using smf over sm makes it easier for work with constants in regression
+4. Using smf over sm makes it easier for work with constants in regressions.
+
+
+
+# Detrended volume 
+
 
 
 '''
