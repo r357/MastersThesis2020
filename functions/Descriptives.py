@@ -71,7 +71,7 @@ def GenerateDescHTMLs(pairs, names):
 
 
 
-def DescribeColumns(pairs, column, names):
+def DescriveColumns(pairs, column, names):
     s = os.getcwd()+"/Descriptives/"
     columnDF = GenerateDescriptiveDF(pairs, column, names)
     stats_column = pd.DataFrame()

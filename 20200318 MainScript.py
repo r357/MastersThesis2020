@@ -30,15 +30,15 @@ if importData:
     
 
 # Good window: 2018-01-01 >    
-if CUTdate: pairs = DateCUT(FullData, Dmin="2018-01-01", Dmax=None)
+if CUTdate: pairs = DateCUT(FullData, Dmin="2010-01-01", Dmax="2020-01-01")
 else: pairs = FullData
 
 
 if Descr:
     # descriptives.PairsDescriptiveInfo(pairs, ETFs, UIs, ProfileReport=True)
     # descriptives.GenerateDescHTMLs(pairs, ETFs, UIs)
-    descriptives.DescribeColumns(pairs, "Return_x", ETFs)
-    descriptives.DescribeColumns(pairs, "Return_y", UIs)
+    descriptives.DescriveColumns(pairs, "Return_x", ETFs)
+    descriptives.DescriveColumns(pairs, "Return_y", UIs)
 
 
 if Plot:
@@ -76,30 +76,15 @@ if ecm:
 #  TESTING / BUILDING
 
 
-#######    Cointegration
-# https://towardsdatascience.com/vector-autoregressions-vector-error-correction-multivariate-model-a69daf6ab618"
+# 2-step Engle-Granger (1987)  !!! this works!, use BIC
+from statsmodels.tsa.stattools import coint
+for i, pair in enumerate(pairs):
+    y0 = pair["lnClose_x"]
+    y1 = pair["lnClose_y"]
+    score, pval, _ = coint(y0, y1, trend="ct", autolag="bic")
+    print(i, "\t", round(pval,3), "\t",  ETFs[i])
 
 
-# from statsmodels.tsa.stattools import coint
-
-# for i, pair in enumerate(pairs):
-#     y0 = np.log(pair["Close_x"])
-#     y1 = np.log(pair["Close_y"])
-#     score, pval, _ = coint(y0, y1, trend="ct")
-#     print(i, "\t", round(pval,3), "\t",  ETFs[i])
-    
-
-# a = pairs[2]["DIFF"]
-# b = np.log(pairs[2]["Close_y"])-np.log(pairs[2]["Close_x"])
-# plt.plot(b)
-
-from statsmodels.tsa.stattools import adfuller   
-plt.plot(resids1[1])
-for r in resids1:
-    print(round(adfuller(r)[1],3))
-
-print(adfuller(pairs[0]["lnClose_x"])[1])
-print(adfuller(pairs[0]["lnClose_y"])[1])
 
 
 
