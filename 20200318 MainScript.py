@@ -11,11 +11,11 @@ import functions.Econometrics as econometrics
 import functions.Plots as plots
 
 
-importData = 0
-CUTdate = 1
+importData = 1
+CUTdate = 0
 Descr = 0
 Plot = 0
-ecm = 1
+ecm = 0
 
 
 ##  IMPORT USING YF
@@ -34,6 +34,7 @@ if CUTdate: pairs = DateCUT(FullData, Dmin="2010-01-01", Dmax="2020-01-01")
 else: pairs = FullData
 
 
+# Descriptives
 if Descr:
     # descriptives.PairsDescriptiveInfo(pairs, ETFs, UIs, ProfileReport=True)
     # descriptives.GenerateDescHTMLs(pairs, ETFs, UIs)
@@ -41,6 +42,7 @@ if Descr:
     descriptives.DescriveColumns(pairs, "Return_y", UIs)
 
 
+# Plots
 if Plot:
     # N.B. Plotted returns are NOT log returns
     plots.Price(pairs, ETFs, UIs)
@@ -49,6 +51,7 @@ if Plot:
     plots.ReturnsDist(pairs, ETFs, UIs, hist=False, xlim=(-0.05, 0.05), ylim=(0, 80))
     plots.DiffGap(pairs, ETFs, UIs)
     plots.Joint(pairs, ETFs, UIs)
+    plots.WorldIndex(data_world)
 
 
 # Econometrics

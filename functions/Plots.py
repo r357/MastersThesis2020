@@ -141,7 +141,12 @@ def Joint(pairs, ETFs, UIs):
 
 
 
-
+def WorldIndex(data_world, name="MSCI World Index"):
+    plt.figure()
+    plt.plot(data_world[0]["Close"], label=name)
+    plt.legend()
+    plt.savefig(s+"W_PricePlot_"+name)
+    plt.show();
 
 
 
