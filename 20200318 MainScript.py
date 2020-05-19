@@ -80,6 +80,7 @@ if ecm:
 
 
 # 2-step Engle-Granger (1987)  !!! this works!, use BIC
+# Performed on price difference, not return difference!
 from statsmodels.tsa.stattools import coint
 for i, pair in enumerate(pairs):
     y0 = pair["lnClose_x"]
