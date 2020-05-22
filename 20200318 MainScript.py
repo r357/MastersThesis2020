@@ -11,8 +11,8 @@ import functions.Econometrics as econometrics
 import functions.Plots as plots
 
 
-importData = 1
-CUTdate = 0
+importData = 0
+CUTdate = 1
 Descr = 0
 Plot = 0
 ecm = 0
@@ -30,7 +30,7 @@ if importData:
     
 
 # Good window: 2018-01-01 >    
-if CUTdate: pairs = DateCUT(FullData, Dmin="2010-01-01", Dmax="2020-01-01")
+if CUTdate: pairs = DateCUT(FullData, Dmin="2019-01-01", Dmax="2020-01-01")
 else: pairs = FullData
 
 
@@ -91,9 +91,16 @@ for i, pair in enumerate(pairs):
 
 
 
+# Detrending
 
-
-
+v = pairs[0]["lnVolume_x"]
+from statsmodels.nonparametric.smoothers_lowess import lowess
+d = pd.DataFrame(lowess(v, np.arange(len(v)), frac=0.05, return_sorted=False), index=v.index)
+plt.plot(d)
+plt.plot(v)
+plt.show()
+dv = v-d[0]
+plt.plot(dv) 
 
 
 # =============================================================================

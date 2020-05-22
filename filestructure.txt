@@ -1,0 +1,100 @@
+.
+├── 20200310\ Bloomberg\ OHLCV.xlsx
+├── 20200318\ MainScript.py
+├── Archive
+│   ├── ^GSPC.html
+│   ├── ^HSI.html
+│   ├── ^N225.html
+│   ├── dump.py
+│   └── yfDataDownload.py
+├── Descriptives
+│   ├── Regress1.html
+│   ├── Return_x.xls
+│   └── Return_y.xls
+├── Graphs
+│   ├── 1_0_Price_IVV\ Equity_SPX\ Index.png
+│   ├── 1_1_Price_IYY\ Equity_DJUST\ Index.png
+│   ├── 1_2_Price_IWM\ Equity_RU20INTR\ Index.png
+│   ├── 1_3_Price_ISF\ LN\ Equity_UKX\ Index.png
+│   ├── 1_4_Price_DAXEX\ GY\ Equity_DAX\ Index.png
+│   ├── 1_5_Price_EUN2\ GY\ Equity_SX5E\ Index.png
+│   ├── 1_6_Price_1329\ JT\ Equity_NKY\ Index.png
+│   ├── 1_7_Price_2800\ HK\ Equity_HSI\ Index.png
+│   ├── 1_8_Price_510210\ CH\ Equity_SHCOMP\ Index.png
+│   ├── 1_9_Price_STFF\ SP\ Equity_STI\ Index.png
+│   ├── 2_0_PricePlotIndex_IVV\ Equity_SPX\ Index.png
+│   ├── 2_1_PricePlotIndex_IYY\ Equity_DJUST\ Index.png
+│   ├── 2_2_PricePlotIndex_IWM\ Equity_RU20INTR\ Index.png
+│   ├── 2_3_PricePlotIndex_ISF\ LN\ Equity_UKX\ Index.png
+│   ├── 2_4_PricePlotIndex_DAXEX\ GY\ Equity_DAX\ Index.png
+│   ├── 2_5_PricePlotIndex_EUN2\ GY\ Equity_SX5E\ Index.png
+│   ├── 2_6_PricePlotIndex_1329\ JT\ Equity_NKY\ Index.png
+│   ├── 2_7_PricePlotIndex_2800\ HK\ Equity_HSI\ Index.png
+│   ├── 2_8_PricePlotIndex_510210\ CH\ Equity_SHCOMP\ Index.png
+│   ├── 2_9_PricePlotIndex_STFF\ SP\ Equity_STI\ Index.png
+│   ├── 3_0_ReturnsPlot_IVV\ Equity_SPX\ Index.png
+│   ├── 3_1_ReturnsPlot_IYY\ Equity_DJUST\ Index.png
+│   ├── 3_2_ReturnsPlot_IWM\ Equity_RU20INTR\ Index.png
+│   ├── 3_3_ReturnsPlot_ISF\ LN\ Equity_UKX\ Index.png
+│   ├── 3_4_ReturnsPlot_DAXEX\ GY\ Equity_DAX\ Index.png
+│   ├── 3_5_ReturnsPlot_EUN2\ GY\ Equity_SX5E\ Index.png
+│   ├── 3_6_ReturnsPlot_1329\ JT\ Equity_NKY\ Index.png
+│   ├── 3_7_ReturnsPlot_2800\ HK\ Equity_HSI\ Index.png
+│   ├── 3_8_ReturnsPlot_510210\ CH\ Equity_SHCOMP\ Index.png
+│   ├── 3_9_ReturnsPlot_STFF\ SP\ Equity_STI\ Index.png
+│   ├── 4_0_ReturnDist_IVV\ Equity_SPX\ Index.png
+│   ├── 4_1_ReturnDist_IYY\ Equity_DJUST\ Index.png
+│   ├── 4_2_ReturnDist_IWM\ Equity_RU20INTR\ Index.png
+│   ├── 4_3_ReturnDist_ISF\ LN\ Equity_UKX\ Index.png
+│   ├── 4_4_ReturnDist_DAXEX\ GY\ Equity_DAX\ Index.png
+│   ├── 4_5_ReturnDist_EUN2\ GY\ Equity_SX5E\ Index.png
+│   ├── 4_6_ReturnDist_1329\ JT\ Equity_NKY\ Index.png
+│   ├── 4_7_ReturnDist_2800\ HK\ Equity_HSI\ Index.png
+│   ├── 4_8_ReturnDist_510210\ CH\ Equity_SHCOMP\ Index.png
+│   ├── 4_9_ReturnDist_STFF\ SP\ Equity_STI\ Index.png
+│   ├── 5_0_DiffGap_IVV\ Equity_SPX\ Index.png
+│   ├── 5_1_DiffGap_IYY\ Equity_DJUST\ Index.png
+│   ├── 5_2_DiffGap_IWM\ Equity_RU20INTR\ Index.png
+│   ├── 5_3_DiffGap_ISF\ LN\ Equity_UKX\ Index.png
+│   ├── 5_4_DiffGap_DAXEX\ GY\ Equity_DAX\ Index.png
+│   ├── 5_5_DiffGap_EUN2\ GY\ Equity_SX5E\ Index.png
+│   ├── 5_6_DiffGap_1329\ JT\ Equity_NKY\ Index.png
+│   ├── 5_7_DiffGap_2800\ HK\ Equity_HSI\ Index.png
+│   ├── 5_8_DiffGap_510210\ CH\ Equity_SHCOMP\ Index.png
+│   ├── 5_9_DiffGap_STFF\ SP\ Equity_STI\ Index.png
+│   ├── 6_0_JointPlot_IVV\ Equity_SPX\ Index.png
+│   ├── 6_1_JointPlot_IYY\ Equity_DJUST\ Index.png
+│   ├── 6_2_JointPlot_IWM\ Equity_RU20INTR\ Index.png
+│   ├── 6_3_JointPlot_ISF\ LN\ Equity_UKX\ Index.png
+│   ├── 6_4_JointPlot_DAXEX\ GY\ Equity_DAX\ Index.png
+│   ├── 6_5_JointPlot_EUN2\ GY\ Equity_SX5E\ Index.png
+│   ├── 6_6_JointPlot_1329\ JT\ Equity_NKY\ Index.png
+│   ├── 6_7_JointPlot_2800\ HK\ Equity_HSI\ Index.png
+│   ├── 6_8_JointPlot_510210\ CH\ Equity_SHCOMP\ Index.png
+│   ├── 6_9_JointPlot_STFF\ SP\ Equity_STI\ Index.png
+│   └── W_PricePlot_MSCI\ World\ Index.png
+├── Results
+│   ├── Regress1.html
+│   └── Regress2.html
+├── filestructure.txt
+├── functions
+│   ├── Bloomberg.py
+│   ├── DataWork.py
+│   ├── Descriptives.py
+│   ├── Econometrics.py
+│   ├── Plots.py
+│   ├── YFinance.py
+│   ├── __init__.py
+│   └── __pycache__
+│       ├── Bloomberg.cpython-37.pyc
+│       ├── DataWork.cpython-37.pyc
+│       ├── Descriptives.cpython-37.pyc
+│       ├── Econometrics.cpython-37.pyc
+│       ├── Plots.cpython-37.pyc
+│       ├── ScriptBloomberg.cpython-37.pyc
+│       ├── Tickers.cpython-37.pyc
+│       ├── YFinance.cpython-37.pyc
+│       └── __init__.cpython-37.pyc
+└── notes.py
+
+6 directories, 91 files
