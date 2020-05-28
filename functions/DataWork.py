@@ -4,7 +4,7 @@ import numpy as np
 
 
 
-def PairUp1(ETF, UI):
+def PairUp1 (ETF, UI):
     pair = pd.merge(ETF, UI, how='inner', left_index=True, right_index=True)
     pair.dropna(inplace=True)
     
@@ -21,7 +21,7 @@ def PairUp1(ETF, UI):
 
 
 
-def PairUp2(pairs, data_world, detrend=True):
+def PairUp2 (pairs, data_world, detrend=True):
     pairs2 = []
     dw = pd.DataFrame()
     
@@ -38,7 +38,7 @@ def PairUp2(pairs, data_world, detrend=True):
 
 
 
-def GetPairs(data_etf, data_ui):
+def GetPairs (data_etf, data_ui):
     if len(data_etf) == len(data_ui):
         pairs = [PairUp1(data_etf[i], data_ui[i]) for i, _ in enumerate(data_etf)]
     return(pairs)
@@ -47,7 +47,7 @@ def GetPairs(data_etf, data_ui):
 
 
 
-def DateCUT(pairs, Dmin=None, Dmax=None):
+def DateCUT (pairs, Dmin=None, Dmax=None):
     new = []
     for i, pair in enumerate(pairs):
         new.append(pair.loc[Dmin:Dmax])
