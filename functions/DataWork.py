@@ -46,7 +46,7 @@ def GetPairs (data_etf, data_ui):
     
 
 
-
+# TO-DO [0] will still cut index at the first entry, not Dmin
 def DateCUT (pairs, Dmin=None, Dmax=None):
     new = []
     for i, pair in enumerate(pairs):
