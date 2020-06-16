@@ -30,7 +30,7 @@ if importData:
     
 
 # Good window: 2018-01-01 >    
-if CUTdate: pairs = DateCUT(FullData, Dmin="2019-01-01", Dmax="2020-01-01")
+if CUTdate: pairs = DateCUT(FullData, Dmin="2018-01-01", Dmax="2019-01-01")
 else: pairs = FullData
 
 
