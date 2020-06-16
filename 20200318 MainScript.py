@@ -34,7 +34,7 @@ if CUTdate: pairs = DateCUT(FullData, Dmin="2019-01-01", Dmax="2020-01-01")
 else: pairs = FullData
 
 
-# Descriptives - describing Log Returns!
+# Descriptives - describing Log Returns
 if Descr:
     # descriptives.PairsDescriptiveInfo(pairs, ETFs, UIs, ProfileReport=True)
     # descriptives.GenerateDescHTMLs(pairs, ETFs, UIs)
@@ -44,7 +44,7 @@ if Descr:
 
 # Plots
 if Plot:
-    # Plotted returns & Distributions are for Log Returns 
+    # Plotted returns & Distributions are for Log Returns
     plots.Price(pairs, ETFs, UIs)
     plots.PriceIndex(pairs, ETFs, UIs, paired=True)
     plots.Returns(pairs, ETFs, UIs)
@@ -123,10 +123,6 @@ plt.plot(dv)
 2. Volume is already de-trended as-is (Qadan & Yagil, p.9), used lnUI. - look at notes.
 3. GAP is already absolute.
 4. Using smf over sm makes it easier for work with constants in regressions.
-
-
-
-# Detrended volume 
 
 
 
