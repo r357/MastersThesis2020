@@ -17,10 +17,10 @@ def PrepareBloombergData(tickers, xls_filepath):
         df["Return"] = df["Close"].pct_change()
                 
         # Natural logs
-        # Logreturns are diffs
+        # Log returns are diffs
+        df["lnClose"] = np.log(df["Close"])
         df["lnReturn"] = df["lnClose"].diff()
         df["Sigma"] = np.log( df["High"] / df["Low"] )
-        df["lnClose"] = np.log(df["Close"])
         df["lnVolume"] = np.log(df["Volume"])
 
         # Drop NAs and append      
