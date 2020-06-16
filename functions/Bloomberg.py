@@ -13,12 +13,14 @@ def PrepareBloombergData(tickers, xls_filepath):
         df = xl.parse(sheetname)
         df.set_index("Dates", inplace=True)
         
+        # Normal returns are pct changes
         df["Return"] = df["Close"].pct_change()
                 
         # Natural logs
+        # Logreturns are diffs
+        df["lnReturn"] = df["lnClose"].diff()
         df["Sigma"] = np.log( df["High"] / df["Low"] )
         df["lnClose"] = np.log(df["Close"])
-        df["lnReturn"] = df["lnClose"].diff()
         df["lnVolume"] = np.log(df["Volume"])
 
         # Drop NAs and append      
