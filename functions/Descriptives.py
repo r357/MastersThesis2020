@@ -9,7 +9,7 @@ import os
 sns.set_style("whitegrid")
 
         
-        
+# Unused
 def PairsDescriptiveInfo(pairs, ETFs, UIs, ProfileReport=True):
     from scipy.stats import describe
     import pandas_profiling as pp
@@ -27,7 +27,7 @@ def PairsDescriptiveInfo(pairs, ETFs, UIs, ProfileReport=True):
 
 
 
-
+# Checked
 def saveHTML(HTML, filename, folder=None):
     '''
     profile reports to HTML into a folder:
@@ -47,7 +47,7 @@ def saveHTML(HTML, filename, folder=None):
 
 
 
-
+# Unused
 def GenerateDescriptiveDF(pairs, column, names):
     df = pd.DataFrame()
     for i, pair in enumerate(pairs):
@@ -57,7 +57,7 @@ def GenerateDescriptiveDF(pairs, column, names):
 
 
 
-### !!! FIX NAMES
+# Unused
 def GenerateDescHTMLs(pairs, names):
     import pandas_profiling as pp
     returnsETF = GenerateDescriptiveDF(pairs, "Return_x", ETFs, UIs)    
@@ -70,8 +70,8 @@ def GenerateDescHTMLs(pairs, names):
 
 
 
-
-def DescriveColumns(pairs, column, names):
+# OK
+def DescribeColumns(pairs, column, names):
     s = os.getcwd()+"/Descriptives/"
     columnDF = GenerateDescriptiveDF(pairs, column, names)
     stats_column = pd.DataFrame()

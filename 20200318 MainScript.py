@@ -34,12 +34,12 @@ if CUTdate: pairs = DateCUT(FullData, Dmin="2019-01-01", Dmax="2020-01-01")
 else: pairs = FullData
 
 
-# Descriptives
+# Descriptives - describing Log Returns!
 if Descr:
     # descriptives.PairsDescriptiveInfo(pairs, ETFs, UIs, ProfileReport=True)
     # descriptives.GenerateDescHTMLs(pairs, ETFs, UIs)
-    descriptives.DescriveColumns(pairs, "Return_x", ETFs)
-    descriptives.DescriveColumns(pairs, "Return_y", UIs)
+    descriptives.DescribeColumns(pairs, "lnReturn_x", ETFs)
+    descriptives.DescribeColumns(pairs, "lnReturn_y", UIs)
 
 
 # Plots
