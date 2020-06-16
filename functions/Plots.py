@@ -34,7 +34,6 @@ def Price(pairs, ETFs, UIs, paired=False):
         
         
 
-
 # Plot indexed prices
 def PriceIndex(pairs, ETFs, UIs, paired=True):
     for i, pair in enumerate(pairs):
@@ -57,21 +56,21 @@ def PriceIndex(pairs, ETFs, UIs, paired=True):
         
     
         
-# Plot returns
+# Plot Log Returns
 def Returns(pairs, ETFs, UIs, paired=False):
     for i, pair in enumerate(pairs):
         
         if paired:
             plt.figure()
-            plt.plot(pair["Return_x"], label=ETFs[i])
+            plt.plot(pair["lnReturn_x"], label=ETFs[i])
             plt.legend()
-            plt.plot(pair["Return_y"], label=UIs[i])
+            plt.plot(pair["lnReturn_y"], label=UIs[i])
             plt.show();
         
         else:
             fig, axs = plt.subplots(1, 2, sharey=True, tight_layout=True, figsize=(8,4))
-            axs[0].plot(pair["Return_x"], label=ETFs[i])
-            axs[1].plot(pair["Return_y"], label=UIs[i], color="C1")
+            axs[0].plot(pair["lnReturn_x"], label=ETFs[i])
+            axs[1].plot(pair["lnReturn_y"], label=UIs[i], color="C1")
             fig.legend([ETFs[i], UIs[i]])
             plt.savefig(s+"3_"+str(i)+"_ReturnsPlot_"+ETFs[i]+"_"+UIs[i])
             fig.show();
@@ -79,13 +78,13 @@ def Returns(pairs, ETFs, UIs, paired=False):
 
 
 
-# Plot returns histogram, kernel density
+# Plot Log Returns histogram and kernel density
 def ReturnsDist(pairs, ETFs, UIs, density=True, normed=True, bins=15, 
                 paired=True, hist=True, xlim=False, ylim=False):
     for i, pair in enumerate(pairs):
        
         plt.figure()
-        sns.distplot(pair["Return_x"],label=ETFs[i],
+        sns.distplot(pair["lnReturn_x"],label=ETFs[i],
                      hist=hist, kde=density, norm_hist=normed, bins=bins)
         plt.legend()
         plt.ylabel("Density")
@@ -100,7 +99,7 @@ def ReturnsDist(pairs, ETFs, UIs, density=True, normed=True, bins=15,
             if xlim: plt.xlim(xlim)
             if ylim: plt.ylim(ylim)
             
-        sns.distplot(pair["Return_y"], label=UIs[i],
+        sns.distplot(pair["lnReturn_y"], label=UIs[i],
                      hist=hist, kde=density, norm_hist=normed, bins=bins)
         plt.legend()
         plt.savefig(s+"4_"+str(i)+"_ReturnDist_"+ETFs[i]+"_"+UIs[i])

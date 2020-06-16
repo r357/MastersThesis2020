@@ -44,7 +44,7 @@ if Descr:
 
 # Plots
 if Plot:
-    # N.B. Plotted returns are NOT log returns
+    # Plotted returns & Distributions are for Log Returns 
     plots.Price(pairs, ETFs, UIs)
     plots.PriceIndex(pairs, ETFs, UIs, paired=True)
     plots.Returns(pairs, ETFs, UIs)
