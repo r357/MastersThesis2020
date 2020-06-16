@@ -46,13 +46,17 @@ def GetPairs (data_etf, data_ui):
     
 
 
-# TO-DO [0] will still cut index at the first entry, not Dmin
+
 def DateCUT (pairs, Dmin=None, Dmax=None):
     new = []
     for i, pair in enumerate(pairs):
+        
+        # Make new lists of pairs with new date range
         new.append(pair.loc[Dmin:Dmax])
-        pair["Close_x_INDEX"] = pair["Close_x"]/pair["Close_x"][0]
-        # pair["Close_y_INDEX"] = pair["Close_y"]/pair["Close_y"][0]
+
+        # Reindex close for plotting for each pair
+        new[i]["Close_x_INDEX"] = new[i]["Close_x"]/new[i]["Close_x"][0]
+        new[i]["Close_y_INDEX"] = new[i]["Close_y"]/new[i]["Close_y"][0]
     return new
 
 
