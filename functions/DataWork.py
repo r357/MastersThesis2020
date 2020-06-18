@@ -16,7 +16,10 @@ def PairUp1 (ETF, UI):
     # Indices
     pair["Close_x_INDEX"] = pair["Close_x"]/pair["Close_x"][0]
     pair["Close_y_INDEX"] = pair["Close_y"]/pair["Close_y"][0]
-    
+
+    # Generate Detrended Volume
+    pair["detVolume_x"] = detrend(pair["lnVolume_x"], frac=2/3)/1000
+
     return pair
 
 
@@ -59,6 +62,48 @@ def DateCUT (pairs, Dmin=None, Dmax=None):
         new[i]["Close_y_INDEX"] = new[i]["Close_y"]/new[i]["Close_y"][0]
     return new
 
+
+
+
+
+def detrend (v, frac=0.05):
+    from statsmodels.nonparametric.smoothers_lowess import lowess
+    L = pd.DataFrame(lowess(v, np.arange(len(v)), frac=frac, return_sorted=False), index=v.index)
+    return (v-L[0])
+
+
+
+
+
+
+def detrendVolumeLOESS (pairs, colname="lnVolume_x", frac=0.05):
+    ''' 
+    This function de-trends volume with LOESS nonparametric regression
+    Default col name can be changed.
+    Default LOESS frac=0.666666666
+
+    https://en.wikipedia.org/wiki/Local_regression
+    https://www.statsmodels.org/stable/generated/statsmodels.nonparametric.smoothers_lowess.lowess.html
+
+    '''
+    from statsmodels.nonparametric.smoothers_lowess import lowess
+    new = "detr_"+colname
+
+    for pair, i in enumerate(pairs):
+        col = pairs[colname]
+        L = pd.DataFrame(lowess(col, np.arange(len(v)), frac=frac, return_sorted=False), index=col.index)
+        pair[new] = col-L[0]
+
+    return pairs
+
+
+
+
+
+def detrendVolumeAVG (pairs, colname="lnVolume_x", window=30):
+    for i, pair in enumerate(pairs):
+        pair["detr_AVG_x"] = pair["lnVolume_x"].rolling(window=window).mean()
+    return pairs
 
 
 

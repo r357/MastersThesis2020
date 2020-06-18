@@ -30,7 +30,7 @@ if importData:
     
 
 # Good window: 2018-01-01 >    
-if CUTdate: pairs = DateCUT(FullData, Dmin="2018-01-01", Dmax="2019-01-01")
+if CUTdate: pairs = DateCUT(FullData, Dmin="2015-01-01", Dmax="2020-01-01")
 else: pairs = FullData
 
 
@@ -79,28 +79,54 @@ if ecm:
 #  TESTING / BUILDING
 
 
+plt.plot(pairs[0]["detVolume_x"])
+plt.plot(pairs[0]["lnVolume_x"])
+
+
+
+
+
+
+
+def cointTest (pairs, ETFs, display=True):
+    from statsmodels.tsa.stattools import coint
+    
+    cointResults = []
+    for i, pair in enumerate(pairs):
+        score, pval, _ = coint(pair["Close_x"], pair["Close_y"], trend="ct", autolag="bic")
+        print(i, "\t", round(pval, 3), "\t", ETFs[i], "\t", score)
+        cointResults.append(pval)
+    return(pd.DataFrame(pval, index=ETFs))
+
+
+
 # 2-step Engle-Granger (1987)  !!! this works!, use BIC
+# Must be under 0.05 
+# works 2015-2020
 # Performed on price difference, not return difference!
 from statsmodels.tsa.stattools import coint
 for i, pair in enumerate(pairs):
     y0 = pair["lnClose_x"]
     y1 = pair["lnClose_y"]
     score, pval, _ = coint(y0, y1, trend="ct", autolag="bic")
-    print(i, "\t", round(pval,3), "\t",  ETFs[i])
+    print(i, "\t", round(pval,3), "\t",  ETFs[i], "\t", score)
+    
 
 
 
 
-# Detrending
+def detrend (v, frac=0.05):
+    from statsmodels.nonparametric.smoothers_lowess import lowess
+    L = pd.DataFrame(lowess(v, np.arange(len(v)), frac=frac, return_sorted=False), index=v.index)
+    return (v-L[0])
 
-v = pairs[0]["lnVolume_x"]
-from statsmodels.nonparametric.smoothers_lowess import lowess
-d = pd.DataFrame(lowess(v, np.arange(len(v)), frac=0.05, return_sorted=False), index=v.index)
-plt.plot(d)
-plt.plot(v)
-plt.show()
-dv = v-d[0]
-plt.plot(dv) 
+
+d1 = detrend(pairs[0]["lnVolume_x"])
+d2 = detrend(pairs[0]["lnVolume_x"], frac=2/3)
+
+plt.plot(d1)
+plt.plot(d2)
+ 
 
 
 # =============================================================================

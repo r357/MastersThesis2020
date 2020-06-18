@@ -1,5 +1,8 @@
 
 
+
+
+
 def detrendVolume(pairs, colname="lnVolume_x"):
 	''' 
 	This function de-trends volume with LOESS nonparametric regression
@@ -16,7 +19,7 @@ def detrendVolume(pairs, colname="lnVolume_x"):
 
 	for pair, i in enumerate(pairs):
 		col = pairs[colname]
-		detrended = pd.DataFrame(lowess(col, np.arange(len(v)), frac=0.05, return_sorted=False), index=col.index)
-		pair[new] = col-detrended
+		L = pd.DataFrame(lowess(col, np.arange(len(v)), frac=0.05, return_sorted=False), index=col.index)
+		pair[new] = col-L[0]
 
 	return pairs
