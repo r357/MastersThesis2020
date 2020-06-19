@@ -14,51 +14,57 @@ import functions.Plots as plots
 importData = 0
 CUTdate = 1
 Descr = 1
-Plot = 1
-ecm = 1
+Plot = 0
+Ecm = 1
 
 
 ##  IMPORT USING YF
 # ETFs, UIs, MSCI = YFinance.YFTickers()
 # data_etf, data_ui, data_world = YFinance.GetDataYF()
 
-##  IMPORT USING BLOOMBERG EXPORT XLS
+
+
 if importData:
     ETFs, UIs, MSCI = BloombergTickers()
     data_etf, data_ui, data_world = GetDataBloomberg("/Users/alenrozac/Desktop/Code/20200310 Bloomberg OHLCV.xlsx")
-    FullData = GetPairs(data_etf, data_ui)
+    FullData = GetPairs(data_etf, data_ui)  
+   
     
+   
 
-# Good window: 2018-01-01 >    
 if CUTdate: pairs = DateCUT(FullData, Dmin="2015-01-01", Dmax="2020-01-01")
 else: pairs = FullData
 
 
-# Descriptives - describing Log Returns
-if Descr:
+
+
+if Descr: #logreturns
     # descriptives.PairsDescriptiveInfo(pairs, ETFs, UIs, ProfileReport=True)
     # descriptives.GenerateDescHTMLs(pairs, ETFs, UIs)
     descriptives.DescribeColumns(pairs, "lnReturn_x", ETFs)
     descriptives.DescribeColumns(pairs, "lnReturn_y", UIs)
 
 
-# Plots
+
+
 if Plot:
     # Plotted returns & Distributions are for Log Returns
     plots.Price(pairs, ETFs, UIs)
     plots.PriceIndex(pairs, ETFs, UIs, paired=True)
     plots.Returns(pairs, ETFs, UIs)
-    plots.ReturnsDist(pairs, ETFs, UIs, hist=False, xlim=(-0.05, 0.05), ylim=(0, 80))
+    plots.ReturnsDist(pairs, ETFs, UIs, hist=False, xlim=(-0.05, 0.05), ylim=(0, 100))
     plots.DiffGap(pairs, ETFs, UIs)
     plots.Joint(pairs, ETFs, UIs)
     plots.WorldIndex(data_world)
 
 
-# Econometrics
-if ecm:
+
+
+if Ecm:
     # Stationarity tests on input data
-    adf_c = econometrics.StationarityADF(pairs, ETFs, UIs, "c")
-    adf_ct = econometrics.StationarityADF(pairs, ETFs, UIs, "ct") 
+    # adf_c = econometrics.StationarityADF(pairs, ETFs, UIs, "c")
+    adf_ct = econometrics.StationarityADF(pairs, ETFs, UIs, "ct", display=False) 
+
     
     # Cointegration test: Engle-Granger 2-step
     e = econometrics.EngleGranger(pairs, ETFs, UIs, trend="c")
