@@ -32,7 +32,7 @@ if importData:
     
    
 
-if CUTdate: pairs = DateCUT(FullData, Dmin="2015-01-01", Dmax="2020-01-01")
+if CUTdate: pairs = DateCUT(FullData, Dmin="2017-01-01", Dmax="2020-01-01")
 else: pairs = FullData
 
 
