@@ -11,10 +11,10 @@ import functions.Econometrics as econometrics
 import functions.Plots as plots
 
 
-importData = 0
+importData = 1
 CUTdate = 1
 Descr = 1
-Plot = 0
+Plot = 1
 Ecm = 1
 
 
@@ -34,7 +34,6 @@ if importData:
 
 if CUTdate: pairs = DateCUT(FullData, Dmin="2015-01-01", Dmax="2020-01-01")
 else: pairs = FullData
-
 
 
 
@@ -87,51 +86,4 @@ if Ecm:
 
 
 
-
-
-
-
-
-
-
-# =============================================================================
-'''   TO-DO LIST
-
-1. add KPSS to testing?
-    
-2. Code cointegration again.
-    - Cointegration test
-    1. show I(1) {not stationary} lnClose_x and lnClose_y
-    2. Perform ECM reg1
-    3. ADF on resids of reg1
-        if I(0): cointegrated series.
-
-'''
-# =============================================================================
-'''   COMMENTS
-
-1. The plots are not log diffs, but only 1-period diffs
-2. Volume is already de-trended as-is (Qadan & Yagil, p.9), used lnUI. - look at notes.
-3. GAP is already absolute.
-4. Using smf over sm makes it easier for work with constants in regressions.
-
-
-
-'''
-# =============================================================================
-'''   HYPOTHESES
-
-H1: Presence of long run equilibirum (on an efficient market)
-    - Stationarity
-    - Cointegration
-    - ECM performs well (reg1)
-    
-H2: TE are +corr w Volatility, -corr w Volume
-    - coeffs (reg2)
-
-H3: World index can explain TE
-    - coeffs (reg2)
-    
-
-'''
 
