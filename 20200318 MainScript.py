@@ -13,9 +13,9 @@ import functions.Plots as plots
 
 importData = 0
 CUTdate = 1
-Descr = 0
-Plot = 0
-ecm = 0
+Descr = 1
+Plot = 1
+ecm = 1
 
 
 ##  IMPORT USING YF
@@ -60,11 +60,11 @@ if ecm:
     adf_c = econometrics.StationarityADF(pairs, ETFs, UIs, "c")
     adf_ct = econometrics.StationarityADF(pairs, ETFs, UIs, "ct") 
     
+    # Cointegration test: Engle-Granger 2-step
+    e = econometrics.EngleGranger(pairs, ETFs, UIs, trend="c")
+
     #Regression 1
     reg1, resids1, Tab1 = econometrics.Regress1(pairs, ETFs, UIs, plot=False, HTMLsave=True)
-
-    # !!! Stationarity test on (write)
-    
 
     # Regression 2
     pairs2 = PairUp2(pairs, data_world)
@@ -79,8 +79,6 @@ if ecm:
 #  TESTING / BUILDING
 
 
-plt.plot(pairs[0]["detVolume_x"])
-plt.plot(pairs[0]["lnVolume_x"])
 
 
 
@@ -88,45 +86,6 @@ plt.plot(pairs[0]["lnVolume_x"])
 
 
 
-def cointTest (pairs, ETFs, display=True):
-    from statsmodels.tsa.stattools import coint
-    
-    cointResults = []
-    for i, pair in enumerate(pairs):
-        score, pval, _ = coint(pair["Close_x"], pair["Close_y"], trend="ct", autolag="bic")
-        print(i, "\t", round(pval, 3), "\t", ETFs[i], "\t", score)
-        cointResults.append(pval)
-    return(pd.DataFrame(pval, index=ETFs))
-
-
-
-# 2-step Engle-Granger (1987)  !!! this works!, use BIC
-# Must be under 0.05 
-# works 2015-2020
-# Performed on price difference, not return difference!
-from statsmodels.tsa.stattools import coint
-for i, pair in enumerate(pairs):
-    y0 = pair["lnClose_x"]
-    y1 = pair["lnClose_y"]
-    score, pval, _ = coint(y0, y1, trend="ct", autolag="bic")
-    print(i, "\t", round(pval,3), "\t",  ETFs[i], "\t", score)
-    
-
-
-
-
-def detrend (v, frac=0.05):
-    from statsmodels.nonparametric.smoothers_lowess import lowess
-    L = pd.DataFrame(lowess(v, np.arange(len(v)), frac=frac, return_sorted=False), index=v.index)
-    return (v-L[0])
-
-
-d1 = detrend(pairs[0]["lnVolume_x"])
-d2 = detrend(pairs[0]["lnVolume_x"], frac=2/3)
-
-plt.plot(d1)
-plt.plot(d2)
- 
 
 
 # =============================================================================

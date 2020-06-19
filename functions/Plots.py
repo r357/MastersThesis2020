@@ -8,7 +8,7 @@ import os
 s = os.getcwd()+"/Graphs/"
 
 # Plot individual prices
-def Price(pairs, ETFs, UIs, paired=False):
+def Price (pairs, ETFs, UIs, paired=False):
     for i, pair in enumerate(pairs):
         
         if paired:
@@ -35,7 +35,7 @@ def Price(pairs, ETFs, UIs, paired=False):
         
 
 # Plot indexed prices
-def PriceIndex(pairs, ETFs, UIs, paired=True):
+def PriceIndex (pairs, ETFs, UIs, paired=True):
     for i, pair in enumerate(pairs):
 
         plt.figure()
@@ -57,7 +57,7 @@ def PriceIndex(pairs, ETFs, UIs, paired=True):
     
         
 # Plot Log Returns
-def Returns(pairs, ETFs, UIs, paired=False):
+def Returns (pairs, ETFs, UIs, paired=False):
     for i, pair in enumerate(pairs):
         
         if paired:
@@ -79,7 +79,7 @@ def Returns(pairs, ETFs, UIs, paired=False):
 
 
 # Plot Log Returns histogram and kernel density
-def ReturnsDist(pairs, ETFs, UIs, density=True, normed=True, bins=15, 
+def ReturnsDist (pairs, ETFs, UIs, density=True, normed=True, bins=15, 
                 paired=True, hist=True, xlim=False, ylim=False):
     for i, pair in enumerate(pairs):
        
@@ -107,9 +107,8 @@ def ReturnsDist(pairs, ETFs, UIs, density=True, normed=True, bins=15,
 
 
 
-
 # Plot paired DIFF and GAP
-def DiffGap(pairs, ETFs, UIs, paired=False):
+def DiffGap (pairs, ETFs, UIs, paired=False):
     for i, pair in enumerate(pairs):
     
         if not paired:
@@ -117,7 +116,7 @@ def DiffGap(pairs, ETFs, UIs, paired=False):
             axs[0].plot(pair["DIFF"])
             # axs[0].set_title("Difference in log prices: " + ETFs[i] + " and " + UIs[i])
             axs[0].set_title("DIFF")
-            axs[1].plot(pair["absGAP"])
+            axs[1].plot(pair["GAP"])
             # axs[1].set_title("Absolute GAP in log returns: "+ ETFs[i] + " and " + UIs[i])
             axs[1].set_title("|GAP|")
             plt.savefig(s+"5_"+str(i)+"_DiffGap_"+ETFs[i]+"_"+UIs[i])
@@ -126,7 +125,7 @@ def DiffGap(pairs, ETFs, UIs, paired=False):
 
 
 # Plot Jointplots
-def Joint(pairs, ETFs, UIs):
+def Joint (pairs, ETFs, UIs):
     for i, pair in enumerate(pairs):
             
         plt.figure()
@@ -140,7 +139,7 @@ def Joint(pairs, ETFs, UIs):
 
 
 
-def WorldIndex(data_world, name="MSCI World Index"):
+def WorldIndex (data_world, name="MSCI World Index"):
     plt.figure()
     plt.plot(data_world[0]["Close"], label=name)
     plt.legend()
