@@ -30,7 +30,7 @@ def Price (pairs, ETFs, UIs, paired=False):
             fig.legend([ETFs[i], UIs[i]])
             plt.savefig(s+"1_"+str(i)+"_Price_"+ETFs[i]+"_"+UIs[i])
             fig.show();
-        
+
         
         
 
