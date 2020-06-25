@@ -64,7 +64,7 @@ if Ecm:
     # adf_c = econometrics.StationarityADF(pairs, ETFs, UIs, "c")
     adf_ct = econometrics.StationarityADF(pairs, ETFs, UIs, "ct", display=False) 
 
-    
+
     # Cointegration test: Engle-Granger 2-step
     e = econometrics.EngleGranger(pairs, ETFs, UIs, trend="c")
 

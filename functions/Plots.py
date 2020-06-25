@@ -24,7 +24,7 @@ def Price (pairs, ETFs, UIs, paired=False):
             plt.show();
         
         else: 
-            fig, axs = plt.subplots(1,2, figsize=(8,4))
+            fig, axs = plt.subplots(1,2, figsize=(8,4), tight_layout=True)
             axs[0].plot(pair["Close_x"], label=ETFs[i])
             axs[1].plot(pair["Close_y"], label=UIs[i], color="C1")
             fig.legend([ETFs[i], UIs[i]])
