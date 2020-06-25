@@ -24,8 +24,7 @@ Ecm = 1
 
 
 
-if importData:
-    ETFs, UIs, MSCI = BloombergTickers()
+if importData:    ETFs, UIs, MSCI = BloombergTickers()
     data_etf, data_ui, data_world = GetDataBloomberg("/Users/alenrozac/Desktop/Code/20200310 Bloomberg OHLCV.xlsx")
     FullData = GetPairs(data_etf, data_ui)  
    
