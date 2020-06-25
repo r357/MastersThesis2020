@@ -80,7 +80,7 @@ def DescribeColumns(pairs, column, names):
         stats_column[str(c)] = stats.describe(columnDF[c].dropna().round(5))
         
     a = stats_column.transpose()
-    a.columns=["N", "Min_Max", "Mean", "Variance", "Skewness", "Kurtosis"]
+    a.columns=["N", "Min_Max", "Mean", "Std", "Skewness", "Kurtosis"]
     a = a.drop("Min_Max", 1)
     a.to_excel(s + column + ".xls")
     
