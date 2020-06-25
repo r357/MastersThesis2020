@@ -13,9 +13,9 @@ import functions.Plots as plots
 
 importData = 1
 CUTdate = 1
-Descr = 0
-Plot = 0
-Ecm = 0
+Descr = 1
+Plot = 1
+Ecm = 1
 
 
 ##  IMPORT USING YF
