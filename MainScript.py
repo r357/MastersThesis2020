@@ -62,7 +62,7 @@ if Plot:
 if Ecm:
     # Stationarity tests on input data
     # adf_c = econometrics.StationarityADF(pairs, ETFs, UIs, "c")
-    adf_ct = econometrics.StationarityADF(pairs, ETFs, UIs, "ct", display=False) 
+    adf_ct = econometrics.StationarityADF(pairs, ETFs, UIs, "ct", display=True) 
 
 
     # Cointegration test: Engle-Granger 2-step
