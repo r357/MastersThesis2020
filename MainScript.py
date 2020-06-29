@@ -13,8 +13,8 @@ import functions.Plots as plots
 
 importData = 1
 CUTdate = 1
-Descr = 1
-Plot = 1
+Descr = 0
+Plot = 0
 Ecm = 1
 
 
@@ -24,7 +24,8 @@ Ecm = 1
 
 
 
-if importData:    ETFs, UIs, MSCI = BloombergTickers()
+if importData:    
+    ETFs, UIs, MSCI = BloombergTickers()
     data_etf, data_ui, data_world = GetDataBloomberg("/Users/alenrozac/Desktop/Code/20200310 Bloomberg OHLCV.xlsx")
     FullData = GetPairs(data_etf, data_ui)  
    
@@ -62,10 +63,13 @@ if Ecm:
     # Stationarity tests on input data
     # adf_c = econometrics.StationarityADF(pairs, ETFs, UIs, "c")
     adf_ct = econometrics.StationarityADF(pairs, ETFs, UIs, "ct", display=True) 
+    from statsmodels.tsa.stattools import adfuller
+    adf_ct_w = adfuller(data_world[0]["lnReturn"], regression="ct")
+    print("World lnRet Pval: ", adf_ct_w[1], "\n")
 
 
     # Cointegration test: Engle-Granger 2-step
-    e = econometrics.EngleGranger(pairs, ETFs, UIs, trend="c")
+    e = econometrics.EngleGranger(pairs, ETFs, UIs, trend="ct")
 
     #Regression 1
     reg1, resids1, Tab1 = econometrics.Regress1(pairs, ETFs, UIs, plot=False, HTMLsave=True)
