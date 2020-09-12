@@ -11,11 +11,11 @@ import functions.Econometrics as econometrics
 import functions.Plots as plots
 
 
-importData = 1
+importData = 0
 CUTdate = 1
 Descr = 0
-Plot = 0
-Ecm = 1
+Plot = 1
+Ecm = 0
 
 
 ##  IMPORT USING YF
@@ -43,7 +43,7 @@ if Descr: #logreturns
     descriptives.DescribeColumns(pairs, "lnReturn_x", ETFs)
     descriptives.DescribeColumns(pairs, "lnReturn_y", UIs)
 
-
+ 
 
 
 if Plot:
@@ -55,6 +55,7 @@ if Plot:
     plots.DiffGap(pairs, ETFs, UIs)
     plots.Joint(pairs, ETFs, UIs)
     plots.WorldIndex(data_world)
+    plots.PriecIndex_Diff(pairs, ETFs, UIs)
 
 
 
@@ -62,9 +63,9 @@ if Plot:
 if Ecm:
     # Stationarity tests on input data
     # adf_c = econometrics.StationarityADF(pairs, ETFs, UIs, "c")
-    adf_ct = econometrics.StationarityADF(pairs, ETFs, UIs, "ct", display=True) 
+    adf_ct = econometrics.StationarityADF(pairs, ETFs, UIs, "ct", display=True)
     from statsmodels.tsa.stattools import adfuller
-    adf_ct_w = adfuller(data_world[0]["lnReturn"], regression="ct")
+    adf_ct_w = adfuller(data_world[0]["Close"], regression="ct")
     print("World lnRet Pval: ", adf_ct_w[1], "\n")
 
 

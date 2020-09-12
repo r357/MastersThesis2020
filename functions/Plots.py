@@ -32,7 +32,23 @@ def Price (pairs, ETFs, UIs, paired=False):
             fig.show();
 
         
+
+def PriecIndex_Diff (pairs, ETFs, UIs):
+    for i, pair in enumerate(pairs):
         
+        # Calc difference
+        difference = pair["Close_y_INDEX"] - pair["Close_x_INDEX"]
+
+        # Plot - 2 subplots
+        fig, axs = plt.subplots(1,2, figsize=(8,4), tight_layout=True)
+        axs[0].plot(pair["Close_x_INDEX"], label=ETFs[i])
+        axs[0].plot(pair["Close_y_INDEX"], label=UIs[i])
+        fig.legend([ETFs[i], UIs[i]])    
+        axs[1].plot(difference, label="Diff")
+        plt.savefig(s+"99_"+str(i)+"_IndexDifference_"+ETFs[i]+"_"+UIs[i])
+        fig.show()
+
+
 
 # Plot indexed prices
 def PriceIndex (pairs, ETFs, UIs, paired=True):
@@ -52,7 +68,7 @@ def PriceIndex (pairs, ETFs, UIs, paired=True):
         if paired: 
             plt.savefig(s+"2_"+str(i)+"_PricePlotIndex_"+ETFs[i]+"_"+UIs[i])
         plt.show();
-        
+
         
     
         
